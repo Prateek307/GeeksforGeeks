@@ -11,5 +11,5 @@ Feel free to browse through the code, learn from it, and contribute your own sol
 
 ## Repository Structure
 
-- **/ProblemOfTheDay:** Title contains the date on which the problem was given and the name of the problem .
-- **/GeeksforGeeks problems:** Title contains the name of the problem 
+- **ProblemOfTheDay:** Title contains the date on which the problem was given and the name of the problem .
+- **GeeksforGeeks problems:** Title contains the name of the problem 
