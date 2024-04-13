@@ -1,60 +1,28 @@
-// link to the problem ---> https://www.geeksforgeeks.org/problems/inorder-traversal/1?page=1&difficulty=School,Basic&sprint=94ade6723438d94ecf0c00c3937dad55&sortBy=submissions
+// link to the problem ---> https://www.geeksforgeeks.org/problems/minimum-element-in-bst/1?page=1&difficulty=School,Basic&sprint=94ade6723438d94ecf0c00c3937dad55&sortBy=submissions
 
 //{ Driver Code Starts
+// Initial Template for C++
+
 #include <bits/stdc++.h>
 using namespace std;
 
-// Tree Node
 struct Node
 {
     int data;
-    Node *left;
-    Node *right;
-
-    Node(int val)
-    {
-        data = val;
-        left = right = NULL;
-    }
+    struct Node *left;
+    struct Node *right;
 };
 
-// } Driver Code Ends
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child
-struct Node {
-    int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
-        left = right = NULL;
-    }
-}; */
-
-class Solution
+// Utility function to create a new Tree Node
+Node *newNode(int val)
 {
-public:
-    void solve(vector<int> &ans, Node *root)
-    {
-        if (root == NULL)
-            return;
+    Node *temp = new Node;
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
 
-        solve(ans, root->left);
-        ans.push_back(root->data);
-        solve(ans, root->right);
-    }
-    // Function to return a list containing the inorder traversal of the tree.
-    vector<int> inOrder(Node *root)
-    {
-        // Your code here
-        vector<int> ans;
-        solve(ans, root);
-        return ans;
-    }
-};
-
-//{ Driver Code Starts.
+    return temp;
+}
 
 // Function to Build Tree
 Node *buildTree(string str)
@@ -72,7 +40,7 @@ Node *buildTree(string str)
         ip.push_back(str);
 
     // Create the root of the tree
-    Node *root = new Node(stoi(ip[0]));
+    Node *root = newNode(stoi(ip[0]));
 
     // Push the root to the queue
     queue<Node *> queue;
@@ -95,7 +63,7 @@ Node *buildTree(string str)
         {
 
             // Create the left child for the current node
-            currNode->left = new Node(stoi(currVal));
+            currNode->left = newNode(stoi(currVal));
 
             // Push it to the queue
             queue.push(currNode->left);
@@ -112,7 +80,7 @@ Node *buildTree(string str)
         {
 
             // Create the right child for the current node
-            currNode->right = new Node(stoi(currVal));
+            currNode->right = newNode(stoi(currVal));
 
             // Push it to the queue
             queue.push(currNode->right);
@@ -123,25 +91,63 @@ Node *buildTree(string str)
     return root;
 }
 
+// } Driver Code Ends
+// User function Template for C++
+
+// Function to find the minimum element in the given BST.
+
+/* struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+// Utility function to create a new Tree Node
+Node* newNode(int val) {
+    Node* temp = new Node;
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
+
+    return temp;
+}
+*/
+
+class Solution
+{
+public:
+    void solve(Node *root, int &ans)
+    {
+        if (root == NULL)
+            return;
+
+        solve(root->left, ans);
+        ans = min(ans, root->data);
+        solve(root->right, ans);
+    }
+    int minValue(Node *root)
+    {
+        // Code here
+        int ans = INT_MAX;
+        solve(root, ans);
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
 int main()
 {
+
     int t;
-    string tc;
-    getline(cin, tc);
-    t = stoi(tc);
+    scanf("%d ", &t);
     while (t--)
     {
         string s;
         getline(cin, s);
         Node *root = buildTree(s);
-
         Solution ob;
-        vector<int> res = ob.inOrder(root);
-        for (int i = 0; i < res.size(); i++)
-            cout << res[i] << " ";
-        cout << endl;
+        cout << ob.minValue(root) << endl;
     }
-    return 0;
+    return 1;
 }
-
 // } Driver Code Ends
