@@ -1,5 +1,4 @@
-// link to the problem ---> https://www.geeksforgeeks.org/problems/nth-fibonacci-number1335/1?page=1&difficulty=Easy&sortBy=submissions
-
+// link to the problem ---> https://www.geeksforgeeks.org/problems/nth-fibonacci-number1335/1
 
 //{ Driver Code Starts
 // Initial Template for C++
@@ -11,19 +10,24 @@ using namespace std;
 class Solution
 {
 public:
-    const int mod = 1e9 + 7;
+    const long long mod = 1e9 + 7;
+
+    long long solve(int n, vector<long long> &dp)
+    {
+        if (n == 1 || n == 2)
+            return 1;
+
+        if (dp[n] != -1)
+            return dp[n];
+
+        return dp[n] = (solve(n - 1, dp) % mod + solve(n - 2, dp) % mod) % mod;
+    }
+
     int nthFibonacci(int n)
     {
         // code here
-        int i;
-        int val[n + 1];
-        val[0] = 0;
-        val[1] = 1;
-        for (i = 2; i <= n; i++)
-        {
-            val[i] = ((val[i - 1]) % mod + (val[i - 2]) % mod) % mod;
-        }
-        return val[n];
+        vector<long long> dp(n + 1, -1);
+        return solve(n, dp);
     }
 };
 
