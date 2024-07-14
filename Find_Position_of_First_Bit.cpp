@@ -1,5 +1,3 @@
-// link to the problem ---> https://www.geeksforgeeks.org/problems/find-position-of-set-bit3706/1?page=1&difficulty=Basic&sprint=94ade6723438d94ecf0c00c3937dad55&sortBy=submissions
-
 //{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
@@ -11,21 +9,18 @@ public:
     int findPosition(int N)
     {
         // code here
-        int pos = 1, ans;
-        int cnt = 0;
+        int pos = 1, i = 0, cnt = 0;
         while (N)
         {
             if (N & 1)
             {
+                pos = i + 1;
                 cnt++;
-                ans = pos;
             }
+            i++;
             N >>= 1;
-            pos++;
         }
-        if (cnt == 1)
-            return ans;
-        return -1;
+        return (cnt > 1 || cnt == 0) ? -1 : pos;
     }
 };
 
