@@ -1,4 +1,4 @@
-// link to the problem ---> https://www.geeksforgeeks.org/problems/delete-a-node-in-single-linked-list/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card
+// link to the problem --->https://www.geeksforgeeks.org/problems/delete-a-node-in-single-linked-list/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card
 
 //{ Driver Code Starts
 #include <iostream>
@@ -47,7 +47,6 @@ class Solution
 {
 public:
   /* Function to delete a node from a linked list */
-
   int length(Node *head)
   {
     Node *curr = head;
@@ -60,13 +59,11 @@ public:
     return len;
   }
 
-  // Function to delete the head node
   Node *DeleteAtStart(Node *head)
   {
     if (head == nullptr)
-    {
-      cout << "The Linked List is empty\n";
-    }
+      return head;
+
     else
     {
       Node *curr = head;
@@ -76,22 +73,21 @@ public:
     return head;
   }
 
-  // Function to delete the last node
   Node *DeleteAtEnd(Node *head)
   {
     if (head == nullptr)
-    {
-      cout << "The Linked List is empty\n";
-    }
+      return head;
+
     else if (head->next == nullptr)
     {
       delete (head);
       head = nullptr;
     }
+
     else
     {
       Node *curr = head;
-      Node *prev = nullptr;
+      Node *prev;
       while (curr->next)
       {
         prev = curr;
@@ -103,45 +99,42 @@ public:
     return head;
   }
 
-  // Function to delete a node at a given position (1-based index)
   Node *DeleteElement(Node *head, int position)
   {
-    // Edge case: If position is 1, delete the head
-    if (position == 1)
-    {
-      return DeleteAtStart(head);
-    }
-
     Node *temp = head;
-    Node *prev = nullptr;
-
-    // Move to the node just before the position
-    for (int i = 1; i < position - 1 && temp != nullptr; i++)
+    Node *curr;
+    while (position - 1)
     {
+      curr = temp;
       temp = temp->next;
+      position--;
     }
 
-    if (temp == nullptr || temp->next == nullptr)
-    {
-      cout << "Position out of bounds\n";
-      return head;
-    }
-
-    // Delete the node at the position
-    Node *toDelete = temp->next;
-    temp->next = toDelete->next;
-    delete (toDelete);
-
+    curr->next = temp->next;
+    delete (temp);
     return head;
   }
+
   Node *deleteNode(Node *head, int x)
   {
     // cdoe here
 
+    int position = x;
     if (head == nullptr)
       return head;
 
-    head = DeleteElement(head, x);
+    if (position == 1)
+    {
+      head = DeleteAtStart(head);
+    }
+    else if (position == length(head))
+    {
+      head = DeleteAtEnd(head);
+    }
+    else
+    {
+      head = DeleteElement(head, position);
+    }
     return head;
   }
 };
